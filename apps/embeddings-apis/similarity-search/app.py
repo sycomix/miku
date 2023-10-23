@@ -40,12 +40,7 @@ def find_similarity():
   cosine_scores = util.cos_sim(text_embedding, df["embedding"].apply(literal_eval))
   df['scores'] = cosine_scores[0].tolist()
   r = df.sort_values('scores', ascending=False).head(limit)
-  result = []
-  for row in r.itertuples():
-    result.append({
-      "id": row.id,
-      "score": row.scores
-    })
+  result = [{"id": row.id, "score": row.scores} for row in r.itertuples()]
   # remove downloaded file
   os.remove(file_path)
   return result

@@ -14,8 +14,11 @@ def get_private_ip():
     hostname = socket.gethostname()
     private_ip = ''
     try:
-        ip_list = [ip for ip in socket.getaddrinfo(hostname, None, socket.AF_INET) if not ip[-1][0].startswith('127.')][:1]
-        if ip_list:
+        if ip_list := [
+            ip
+            for ip in socket.getaddrinfo(hostname, None, socket.AF_INET)
+            if not ip[-1][0].startswith('127.')
+        ][:1]:
             private_ip = ip_list[0][-1][0]
     except Exception:
         pass
